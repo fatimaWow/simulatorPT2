@@ -8,6 +8,7 @@ public class IsolineRenderer : MonoBehaviour
     public float maxLevel = 10f;
     public int lineCount = 20;
 
+
     private Mesh mesh;
 
     void Awake()

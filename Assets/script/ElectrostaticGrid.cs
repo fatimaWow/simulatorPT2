@@ -18,6 +18,9 @@ public class ElectrostaticGrid : MonoBehaviour
     private Vector2[] gridXZ;
     private float[,] field;
 
+    public Material mat;
+
+
     private IsolineRenderer isolines;
 
     void Start()
@@ -28,12 +31,16 @@ public class ElectrostaticGrid : MonoBehaviour
         isolines = new GameObject("Isolines").AddComponent<IsolineRenderer>();
         isolines.transform.SetParent(transform, false);
 
+        Renderer isolineRend = isolines.GetComponent<Renderer>();
+
+       isolineRend.material = mat;
+
         BuildGrid();
     }
 
     void Update()
     {
-        UpdateField();
+      //  UpdateField();
     }
 
     void BuildGrid()
@@ -89,7 +96,7 @@ public class ElectrostaticGrid : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    void UpdateField()
+    public void UpdateField()
     {
         var charges = ChargeManager.Instance.Charges;
         int i = 0;
