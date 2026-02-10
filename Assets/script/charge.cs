@@ -9,6 +9,7 @@ public class Charge : MonoBehaviour
     private ElectrostaticGrid plane;
     private float k = 8f;
     public forceVector vec;
+    public float deltacharge = 0f;
 
     //  public int charge;
 
@@ -88,8 +89,8 @@ public class Charge : MonoBehaviour
 
             if (!plane) return;
 
-           // plane.UpdateField();
-
+            // plane.UpdateField();
+         //   run();
 
 
         }

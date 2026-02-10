@@ -1,13 +1,15 @@
+
+
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class ElectrostaticGrid : MonoBehaviour
 {
-    public int resolutionX = 200;
-    public int resolutionY = 200;
+    public int resolutionX = 50;
+    public int resolutionY = 50;
 
-    public float sizeX = 1000f;
-    public float sizeY = 1000f;
+    public float sizeX = 100f;
+    public float sizeY = 100f;
 
     public float kConstant = 1f;
     public float softening = 0.5f;
@@ -20,6 +22,14 @@ public class ElectrostaticGrid : MonoBehaviour
 
     public Material mat;
 
+    public ChargeManager manager;
+
+    float _interval = 2f;
+
+    float _time;
+
+    // float deltaCharge = 0;
+
 
     private IsolineRenderer isolines;
 
@@ -27,7 +37,7 @@ public class ElectrostaticGrid : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-
+        _time = 0f;
         isolines = new GameObject("Isolines").AddComponent<IsolineRenderer>();
         isolines.transform.SetParent(transform, false);
 
@@ -35,12 +45,25 @@ public class ElectrostaticGrid : MonoBehaviour
 
        isolineRend.material = mat;
 
+        InvokeRepeating("repeat", 0, .5f);
+
         BuildGrid();
+
+       
+      
     }
 
     void Update()
     {
-      //  UpdateField();
+       
+    }
+
+    void repeat()
+    {
+        if(manager.run == true)
+        {
+            UpdateField();
+        }
     }
 
     void BuildGrid()
@@ -98,24 +121,28 @@ public class ElectrostaticGrid : MonoBehaviour
 
     public void UpdateField()
     {
+        Debug.Log("update called");
         var charges = ChargeManager.Instance.Charges;
         int i = 0;
+       
 
         for (int y = 0; y <= resolutionY; y++)
         {
             for (int x = 0; x <= resolutionX; x++)
             {
+                
                 float pot = 0f;
                 Vector2 p = gridXZ[i];
 
                 foreach (var c in charges)
                 {
+                   
                     if (!c) continue;
 
                     Vector2 cp = c.GetLocalXZ(transform);
                     float r = Mathf.Max(Vector2.Distance(p, cp), softening);
 
-                    pot += kConstant * c.charge / r;
+                    pot += kConstant * c.deltacharge / r;
                 }
 
                 field[x, y] = pot;
@@ -123,6 +150,27 @@ public class ElectrostaticGrid : MonoBehaviour
 
                 i++;
             }
+        }
+
+        foreach (var c in charges)
+        {
+
+            if (c.charge > 0)
+            {
+                if (c.deltacharge < c.charge)
+                {
+                    c.deltacharge += 0.2f;
+                }
+
+            }
+            else
+            {
+                if (c.deltacharge > c.charge)
+                {
+                    c.deltacharge -= 0.2f;
+                }
+            }
+            Debug.Log(c.deltacharge);
         }
 
         mesh.vertices = vertices;

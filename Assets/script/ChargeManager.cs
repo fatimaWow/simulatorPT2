@@ -7,8 +7,10 @@ public class ChargeManager : MonoBehaviour
     public static ChargeManager Instance;
 
     private readonly List<Charge> charges = new();
-    bool run = false;
+    public bool run = false;
     int ad = 1;
+    bool allChargesCollide = false;
+   
 
     void Awake()
     {
@@ -22,16 +24,27 @@ public class ChargeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    //void Update()
-    //{
+    void Update()
+    {
 
-    //    if (charges[0].is_collide == true && charges[1].is_collide == true && run == false) {
-    //        rungame();
-    //        run = true;
-        
-    //    }
+       foreach(var c in charges)
+        {
+            if (c.is_collide == true)
+            {
+                allChargesCollide = true;
+            }
+            else
+            {
+                allChargesCollide = false;
+            }
+
+        }
+
+        if (allChargesCollide == true) {
+            run = true;
+        }
                
-    //}
+    }
 
     public void Register(Charge c)
     {
@@ -46,10 +59,7 @@ public class ChargeManager : MonoBehaviour
 
     public void rungame()
     {
-        for (int i = 0; i < charges.Count; i++)
-        {
-            charges[i].run();
-        }
+        run = true;
         if (charges[2].charge < 0 &&  charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0)
         {
             charges[2].calcForce(charges[3]);
@@ -67,9 +77,17 @@ public class ChargeManager : MonoBehaviour
 
     public void add( float num)
     {
+        var charge = charges[charges.Count - 1];
+        if (charge.charge > 0 && charge.charge > 1)
+        {
+            charge.charge += 1;
+        }
+        else if(charge.charge < 0 && charge.charge < -1)
+        {
+            charge.charge -= 1;
 
+        }
         
-        charges[charges.Count-1].charge += 1;
         Vector3 scale = charges[charges.Count - 1].transform.localScale;
         scale.x += num;
         scale.y += num;
@@ -80,6 +98,16 @@ public class ChargeManager : MonoBehaviour
     public void minus(float num)
     {
 
+        var charge = charges[charges.Count - 1];
+        if (charge.charge > 0 && charge.charge > 1)
+        {
+            charge.charge -= 1;
+        }
+        else if(charge.charge < 0 && charge.charge < -1)
+        {
+            charge.charge += 1;
+
+        }
 
         charges[charges.Count - 1].charge -= 1;
         Vector3 scale = charges[charges.Count - 1].transform.localScale;
