@@ -6,10 +6,11 @@ public class ChargeManager : MonoBehaviour
 {
     public static ChargeManager Instance;
 
-    private readonly List<Charge> charges = new();
+    public readonly List<Charge> charges = new();
     public bool run = false;
-    int ad = 1;
     bool allChargesCollide = false;
+    int ad = 1;
+    //
    
 
     void Awake()
@@ -27,23 +28,24 @@ public class ChargeManager : MonoBehaviour
     void Update()
     {
 
-       foreach(var c in charges)
-        {
-            if (c.is_collide == true)
-            {
-                allChargesCollide = true;
-            }
-            else
-            {
-                allChargesCollide = false;
-            }
+        //foreach (var c in charges)
+        //{
+        //    if (c.is_collide == true)
+        //    {
+        //        allChargesCollide = true;
+        //    }
+        //    else
+        //    {
+        //        allChargesCollide = false;
+        //    }
 
-        }
+        //}
 
-        if (allChargesCollide == true) {
-            run = true;
-        }
-               
+        //if (allChargesCollide == true)
+        //{
+        //    run = true;
+        //}
+
     }
 
     public void Register(Charge c)
@@ -60,17 +62,21 @@ public class ChargeManager : MonoBehaviour
     public void rungame()
     {
         run = true;
-        if (charges[2].charge < 0 &&  charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0)
+        if (charges.Count > 3)
         {
-            charges[2].calcForce(charges[3]);
-            charges[3].calcForce(charges[2]);
-        }
-        else
-        {
-            charges[2].calcForce(charges[3]);
-            charges[3].calcForce(charges[2]);
-            charges[2].transform.Rotate(0, 180, 0);
-            charges[3].transform.Rotate(0, 180, 0);
+            if (charges[2].charge < 0 && charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0)
+            {
+                charges[2].calcForce(charges[3]);
+                charges[3].calcForce(charges[2]);
+
+            }
+            else
+            {
+                charges[2].calcForce(charges[3]);
+                charges[3].calcForce(charges[2]);
+                charges[2].transform.Rotate(0, 180, 0);
+                charges[3].transform.Rotate(0, 180, 0);
+            }
         }
         
     }
@@ -85,7 +91,6 @@ public class ChargeManager : MonoBehaviour
         else if(charge.charge < 0 && charge.charge < -1)
         {
             charge.charge -= 1;
-
         }
         
         Vector3 scale = charges[charges.Count - 1].transform.localScale;
@@ -116,6 +121,15 @@ public class ChargeManager : MonoBehaviour
         scale.z += num;
         charges[charges.Count - 1].transform.localScale = scale;
     }
+
+    //public void reset()
+    //{
+    //    for (int i = 2; i < charges.Count; i++)
+    //    {
+    //        charges[i].destroySelf();
+    //    }
+
+    //}
 
 
 

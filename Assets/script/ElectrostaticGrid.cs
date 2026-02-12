@@ -1,5 +1,10 @@
 
 
+
+
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -19,6 +24,7 @@ public class ElectrostaticGrid : MonoBehaviour
     private Vector3[] vertices;
     private Vector2[] gridXZ;
     private float[,] field;
+    bool allChargesReachMax = false;
 
     public Material mat;
 
@@ -45,11 +51,11 @@ public class ElectrostaticGrid : MonoBehaviour
 
        isolineRend.material = mat;
 
-        InvokeRepeating("repeat", 0, .5f);
+
+        InvokeRepeating("repeat", 0, .2f);
 
         BuildGrid();
 
-       
       
     }
 
@@ -60,10 +66,23 @@ public class ElectrostaticGrid : MonoBehaviour
 
     void repeat()
     {
-        if(manager.run == true)
+        if (manager.run == true && allChargesReachMax == false)
         {
+            
             UpdateField();
+            Debug.Log("repeat called");
         }
+       
+    }
+
+    public void reset()
+    {
+        for(int i = manager.charges.Count - 1; i > 1; i--)
+        {
+            manager.charges[i].destroySelf();
+        }
+        BuildGrid();
+       // manager.charges
     }
 
     void BuildGrid()
@@ -154,12 +173,31 @@ public class ElectrostaticGrid : MonoBehaviour
 
         foreach (var c in charges)
         {
+            if (c.maxReached == true)
+            {
+                allChargesReachMax = true;
+            }
+            else{
+                allChargesReachMax = false;
+            }
+
+            if(allChargesReachMax == true)
+            {
+                manager.run = false;
+                allChargesReachMax = false;
+                Debug.Log("run state: "+ manager.run);
+                Debug.Log("chargesMax state:" + allChargesReachMax);
+            }
 
             if (c.charge > 0)
             {
                 if (c.deltacharge < c.charge)
                 {
                     c.deltacharge += 0.2f;
+                }
+                else
+                {
+                    c.maxReached = true;
                 }
 
             }
@@ -169,9 +207,15 @@ public class ElectrostaticGrid : MonoBehaviour
                 {
                     c.deltacharge -= 0.2f;
                 }
+                else
+                {
+                    c.maxReached = true;
+                }
             }
-            Debug.Log(c.deltacharge);
+           // Debug.Log(c.deltacharge);
         }
+
+       
 
         mesh.vertices = vertices;
         mesh.RecalculateBounds();

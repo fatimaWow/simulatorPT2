@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEditor;
+using System.Collections.Specialized;
 
 
 public class GameMenuManager : MonoBehaviour
@@ -37,9 +38,12 @@ public class GameMenuManager : MonoBehaviour
 
     public void setview(GameObject menu2)
     {
+       Vector3 loc = new Vector3(gameMenu.transform.position.x, gameMenu.gameObject.transform.position.y, gameMenu.gameObject.transform.position.z);
+        
+        //gameMenu.transform.position = head.position + new Vector3(head.forward.x, 0, head.forward.z).normalized * spawndistance;
         gameMenu.SetActive(false);
-
         gameMenu = menu2;
+        gameMenu.transform.position = loc;
         gameMenu.SetActive(true);
     }
 }

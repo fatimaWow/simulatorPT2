@@ -10,6 +10,7 @@ public class Charge : MonoBehaviour
     private float k = 8f;
     public forceVector vec;
     public float deltacharge = 0f;
+    public bool maxReached = false;
 
     //  public int charge;
 
@@ -39,14 +40,14 @@ public class Charge : MonoBehaviour
         return new Vector2(local.x, local.z);
     }
 
-    public void run()
-    {
-        if (is_collide)
-        {
+    //public void run()
+    //{
+    //    if (is_collide)
+    //    {
            
-            plane.UpdateField();
-        }
-    }
+    //        plane.UpdateField();
+    //    }
+    //}
     public void calcForce(Charge target)
     {
         //float product = Mathf.Abs(charge) * Mathf.Abs(target.charge);
@@ -60,6 +61,11 @@ public class Charge : MonoBehaviour
 
 
 
+    }
+
+    public void destroySelf()
+    {
+        Destroy(gameObject);
     }
 
 
