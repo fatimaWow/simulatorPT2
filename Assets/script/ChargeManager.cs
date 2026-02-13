@@ -1,18 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
 
 public class ChargeManager : MonoBehaviour
 {
     public static ChargeManager Instance;
 
     public readonly List<Charge> charges = new();
-    public bool run = false;
+    
     bool allChargesCollide = false;
     public static bool detectChange = false;
-    int ad = 1;
-    //
-   
+    public bool run = false;
+    
 
     void Awake()
     {
@@ -29,24 +29,6 @@ public class ChargeManager : MonoBehaviour
     void Update()
     {
 
-        //foreach (var c in charges)
-        //{
-        //    if (c.is_collide == true)
-        //    {
-        //        allChargesCollide = true;
-        //    }
-        //    else
-        //    {
-        //        allChargesCollide = false;
-        //    }
-
-        //}
-
-        //if (allChargesCollide == true)
-        //{
-        //    run = true;
-        //}
-
     }
 
     public void Register(Charge c)
@@ -60,9 +42,9 @@ public class ChargeManager : MonoBehaviour
         charges.Remove(c);
     }
 
-    public void rungame()
+    public void rungame() //runs when play button press
     {
-        run = true;
+       
         if (charges.Count > 3)
         {
             if (charges[2].charge < 0 && charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0)
@@ -85,37 +67,41 @@ public class ChargeManager : MonoBehaviour
     public void add( float num)
     {
         var charge = charges[charges.Count - 1];
-        if (charge.charge > 0 && charge.charge > 1)
+        if (charge.charge >= 1 && charge.charge < 4) // positive 
         {
             charge.charge += 1;
+            resizecharge(num);
         }
-        else if(charge.charge < 0 && charge.charge < -1)
+        else if(charge.charge <= -1 && charge.charge > -4) //negative
         {
             charge.charge -= 1;
+            resizecharge(num);
         }
-        
-        Vector3 scale = charges[charges.Count - 1].transform.localScale;
-        scale.x += num;
-        scale.y += num;
-        scale.z += num;
-        charges[charges.Count - 1].transform.localScale = scale;
+   
     }
 
     public void minus(float num)
     {
 
         var charge = charges[charges.Count - 1];
-        if (charge.charge > 0 && charge.charge > 1)
+        if (charge.charge > 1)// positive 
         {
             charge.charge -= 1;
+            resizecharge(num);
         }
-        else if(charge.charge < 0 && charge.charge < -1)
+        else if(charge.charge < -1) //negative
         {
             charge.charge += 1;
+            resizecharge(num);
 
         }
 
-        charges[charges.Count - 1].charge -= 1;
+       
+        
+    }
+
+    public void resizecharge(float num)
+    {
         Vector3 scale = charges[charges.Count - 1].transform.localScale;
         scale.x += num;
         scale.y += num;

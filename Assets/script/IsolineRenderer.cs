@@ -7,8 +7,7 @@ public class IsolineRenderer : MonoBehaviour
     public float minLevel = -10f;
     public float maxLevel = 10f;
     public int lineCount = 20;
-
-
+  
     private Mesh mesh;
 
     void Awake()
@@ -95,5 +94,10 @@ public class IsolineRenderer : MonoBehaviour
         mesh.Clear();
         mesh.SetVertices(verts);
         mesh.SetIndices(inds, MeshTopology.Lines, 0);
+    }
+
+    public void isolineReset()
+    {
+        mesh.Clear();
     }
 }

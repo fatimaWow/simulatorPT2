@@ -21,13 +21,9 @@ public class ElectrostaticGrid : MonoBehaviour
     private float[,] oldField;
     bool allChargesReachMax = false;
     
-    public Material mat;
+    public Material isolinematerial;
 
     public ChargeManager manager;
-
-    float _interval = 2f;
-
-    float _time;
 
     float animTime = 1f;
 
@@ -40,13 +36,13 @@ public class ElectrostaticGrid : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        _time = 0f;
+
         isolines = new GameObject("Isolines").AddComponent<IsolineRenderer>();
         isolines.transform.SetParent(transform, false);
 
         Renderer isolineRend = isolines.GetComponent<Renderer>();
 
-       isolineRend.material = mat;
+       isolineRend.material = isolinematerial;
 
 
         //InvokeRepeating("repeat", 0, .2f);
@@ -98,8 +94,10 @@ public class ElectrostaticGrid : MonoBehaviour
         {
             manager.charges[i].destroySelf();
         }
+
+       // isolines.isolineReset();
         BuildGrid();
-       // manager.charges
+     
     }
 
     void BuildGrid()
@@ -230,6 +228,7 @@ public class ElectrostaticGrid : MonoBehaviour
             //    }
             //}
            // Debug.Log(c.deltacharge);
+
         }
 
        

@@ -43,14 +43,14 @@ Material:
     - _XRMotionVectorsPass: 1
     - _horzonblend: 30
     - _nadiarblend: 1
-    - _starheight: 344.4
-    - _starintensity: 1.3
-    - _starpower: 32.4
+    - _starheight: 336.91
+    - _starintensity: 1.1
+    - _starpower: 27.4
     - _zenithblend: 1
     m_Colors:
-    - _groundcolor: {r: 0.05660379, g: 0.011854757, b: 0.011854757, a: 1}
+    - _groundcolor: {r: 0.12654679, g: 0.060640775, b: 0.19245279, a: 1}
     - _horizoncolor: {r: 0.16106996, g: 0.15080805, b: 0.22264141, a: 1}
-    - _skycolor: {r: 0.13891771, g: 0.15947634, b: 0.4113207, a: 1}
+    - _skycolor: {r: 0.17070127, g: 0.20038241, b: 0.5169811, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &3731377138491720380
