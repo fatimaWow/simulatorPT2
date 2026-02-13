@@ -9,6 +9,7 @@ public class ChargeManager : MonoBehaviour
     public readonly List<Charge> charges = new();
     public bool run = false;
     bool allChargesCollide = false;
+    public static bool detectChange = false;
     int ad = 1;
     //
    
@@ -78,7 +79,7 @@ public class ChargeManager : MonoBehaviour
                 charges[3].transform.Rotate(0, 180, 0);
             }
         }
-        
+        detectChange = true;
     }
 
     public void add( float num)

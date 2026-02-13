@@ -9,7 +9,6 @@ public class Charge : MonoBehaviour
     private ElectrostaticGrid plane;
     private float k = 8f;
     public forceVector vec;
-    public float deltacharge = 0f;
     public bool maxReached = false;
 
     //  public int charge;

@@ -1,10 +1,3 @@
-
-
-
-
-using System.IO;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -22,10 +15,12 @@ public class ElectrostaticGrid : MonoBehaviour
 
     private Mesh mesh;
     private Vector3[] vertices;
+    private float[] oldVertices;
     private Vector2[] gridXZ;
     private float[,] field;
+    private float[,] oldField;
     bool allChargesReachMax = false;
-
+    
     public Material mat;
 
     public ChargeManager manager;
@@ -33,6 +28,8 @@ public class ElectrostaticGrid : MonoBehaviour
     float _interval = 2f;
 
     float _time;
+
+    float animTime = 1f;
 
     // float deltaCharge = 0;
 
@@ -52,7 +49,7 @@ public class ElectrostaticGrid : MonoBehaviour
        isolineRend.material = mat;
 
 
-        InvokeRepeating("repeat", 0, .2f);
+        //InvokeRepeating("repeat", 0, .2f);
 
         BuildGrid();
 
@@ -61,7 +58,27 @@ public class ElectrostaticGrid : MonoBehaviour
 
     void Update()
     {
-       
+
+    }
+
+    void FixedUpdate()   // animation
+    {
+        if (ChargeManager.detectChange)
+        {
+            ChargeManager.detectChange = false;
+            animTime = 0;
+            for (int y = 0; y <= resolutionY; y++)
+            {
+                for (int x = 0; x <= resolutionX; x++)
+                {
+                    oldField[x, y] = field[x, y];
+                }
+            }
+            for (int i = 0; i < vertices.Length; i++) oldVertices[i] = vertices[i].y;
+        }
+        if (animTime >= 1f) return;
+        animTime = Mathf.Min(1f, animTime + Time.fixedDeltaTime * 0.5f);
+        UpdateField();
     }
 
     void repeat()
@@ -91,9 +108,11 @@ public class ElectrostaticGrid : MonoBehaviour
         int vy = resolutionY + 1;
 
         vertices = new Vector3[vx * vy];
+        oldVertices = new float[vx * vy];
         gridXZ = new Vector2[vx * vy];
         field = new float[vx, vy];
-
+        oldField = new float[vx, vy];
+        
         int[] tris = new int[resolutionX * resolutionY * 6];
 
         int i = 0;
@@ -140,11 +159,9 @@ public class ElectrostaticGrid : MonoBehaviour
 
     public void UpdateField()
     {
-        Debug.Log("update called");
         var charges = ChargeManager.Instance.Charges;
         int i = 0;
        
-
         for (int y = 0; y <= resolutionY; y++)
         {
             for (int x = 0; x <= resolutionX; x++)
@@ -161,11 +178,11 @@ public class ElectrostaticGrid : MonoBehaviour
                     Vector2 cp = c.GetLocalXZ(transform);
                     float r = Mathf.Max(Vector2.Distance(p, cp), softening);
 
-                    pot += kConstant * c.deltacharge / r;
+                    pot += kConstant * c.charge / r;
                 }
 
-                field[x, y] = pot;
-                vertices[i].y = pot * heightScale;
+                field[x, y] = Mathf.Lerp(oldField[x, y], pot, 1 - (1 - animTime) * (1 - animTime));
+                vertices[i].y = Mathf.Lerp(oldVertices[i], pot * heightScale, 1 - (1 - animTime) * (1 - animTime));
 
                 i++;
             }
@@ -189,29 +206,29 @@ public class ElectrostaticGrid : MonoBehaviour
                 Debug.Log("chargesMax state:" + allChargesReachMax);
             }
 
-            if (c.charge > 0)
-            {
-                if (c.deltacharge < c.charge)
-                {
-                    c.deltacharge += 0.2f;
-                }
-                else
-                {
-                    c.maxReached = true;
-                }
+            //if (c.charge > 0)
+            //{
+            //    if (c.deltacharge < c.charge)
+            //    {
+            //        c.deltacharge += 0.2f;
+            //    }
+            //    else
+            //    {
+            //        c.maxReached = true;
+            //    }
 
-            }
-            else
-            {
-                if (c.deltacharge > c.charge)
-                {
-                    c.deltacharge -= 0.2f;
-                }
-                else
-                {
-                    c.maxReached = true;
-                }
-            }
+            //}
+            //else
+            //{
+            //    if (c.deltacharge > c.charge)
+            //    {
+            //        c.deltacharge -= 0.2f;
+            //    }
+            //    else
+            //    {
+            //        c.maxReached = true;
+            //    }
+            //}
            // Debug.Log(c.deltacharge);
         }
 
