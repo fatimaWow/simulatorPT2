@@ -22,6 +22,7 @@ public class addCharge : MonoBehaviour
             Vector3 vector = spawn.transform.position;
             vector.z += 4;
             Instantiate(obj, vector, Quaternion.identity);
+            Debug.Log("spaawnObject called");
         }
         else
         {
