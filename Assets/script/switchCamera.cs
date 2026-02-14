@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEditor;
 
 
+
 public class switchCamera : MonoBehaviour
 {
     public GameObject sideCam;
@@ -36,33 +37,119 @@ public class switchCamera : MonoBehaviour
 
     }
 
-    public void Fade()
+    public void FadeTop()
     {
-        StartCoroutine(fadeRoutine());
+        //top view
+        if (topButtonpressed)
+        {
+            StartCoroutine(fadeRoutineOGtoTop());
+        }
+        else if (topButtonpressed == false)
+        {
+            StartCoroutine(fadeRoutineToptoOG());
+        }
+        
+
+
     }
-    IEnumerator fadeRoutine()
+
+    public void FadeSide()
+    {
+        if (sideButtonpressed)
+        {
+            StartCoroutine(fadeRoutineOGtoSide());
+        }
+        else if (sideButtonpressed == false)
+        {
+            StartCoroutine(fadeRoutineSidetoOG());
+        }
+    }
+
+    //top view fades
+
+    IEnumerator fadeRoutineOGtoTop()  // regular to top
     {
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration); // wiat for screen to fade completely then exit
         
-        
-        if (topButtonpressed)
-        {
             topCamSwitch();
-            Debug.Log("camera swithed");
 
             fadeScreenTop.FadeIn();
             yield return new WaitForSeconds(fadeScreenTop.fadeDuration);
-        }
+        
     }
 
+    IEnumerator fadeRoutineToptoOG()  // top veiw to regular
+    {
+        fadeScreenTop.FadeOut();
+        yield return new WaitForSeconds(fadeScreenTop.fadeDuration); 
+
+            ogCamSwitch();
+
+            fadeScreen.FadeIn();
+            yield return new WaitForSeconds(fadeScreen.fadeDuration);
+        
+    }
+    
+  
+    //side view fades
+
+    IEnumerator fadeRoutineOGtoSide()  // regular to side
+    {
+        fadeScreen.FadeOut();
+        yield return new WaitForSeconds(fadeScreen.fadeDuration);
+
+        sideCamSwitch();
+
+        fadeScreenSide.FadeIn();
+        yield return new WaitForSeconds(fadeScreenSide.fadeDuration);
+
+    }
+
+    IEnumerator fadeRoutineSidetoOG()  // side veiw to regular
+    {
+        Debug.Log("side to og called");
+        fadeScreenSide.FadeOut();
+        yield return new WaitForSeconds(fadeScreenSide.fadeDuration);
+
+        ogCamSwitch();
+
+        fadeScreen.FadeIn();
+        yield return new WaitForSeconds(fadeScreen.fadeDuration);
+
+    }
+
+    //button detectionss
     void ButtonPressedTop(InputAction.CallbackContext context)
     {
-
+        
         topButtonpressed = true;
-        Fade();
+        FadeTop();
  
     }
+
+    void ButtonReleasedTop(InputAction.CallbackContext context)
+    {
+        
+        topButtonpressed = false;
+        FadeTop();
+    }
+
+    void ButtonPressedSide(InputAction.CallbackContext context)
+    {
+        sideButtonpressed = true;
+        FadeSide();
+
+    }
+
+
+    void ButtonReleasedSide(InputAction.CallbackContext context)
+    {
+        sideButtonpressed = false;
+        FadeSide();
+    }
+
+    //camera switches emethods
 
     void topCamSwitch()
     {
@@ -71,31 +158,26 @@ public class switchCamera : MonoBehaviour
         OGcam.SetActive(false);
     }
 
-
-    void ButtonReleasedTop(InputAction.CallbackContext context)
+    void sideCamSwitch()
     {
-        sideCam.SetActive(false);
-        topCam.SetActive(false);
-        OGcam.SetActive(true);
-        topButtonpressed = false;
-    }
-
-
-    void ButtonPressedSide(InputAction.CallbackContext context)
-    {
-        
         sideCam.SetActive(true);
         topCam.SetActive(false);
         OGcam.SetActive(false);
     }
 
-
-    void ButtonReleasedSide(InputAction.CallbackContext context)
+    void ogCamSwitch()
     {
+
         sideCam.SetActive(false);
         topCam.SetActive(false);
         OGcam.SetActive(true);
     }
+
+
+ 
+
+
+  
 
 
 }
