@@ -95,7 +95,7 @@ public class ElectrostaticGrid : MonoBehaviour
             manager.charges[i].destroySelf();
         }
 
-       // isolines.isolineReset();
+       isolines.mesh.Clear(); // reset isoline
         BuildGrid();
      
     }
