@@ -49,7 +49,7 @@ Material:
     - _zenithblend: 1
     m_Colors:
     - _groundcolor: {r: 0.12654679, g: 0.060640775, b: 0.19245279, a: 1}
-    - _horizoncolor: {r: 0.16106996, g: 0.15080805, b: 0.22264141, a: 1}
+    - _horizoncolor: {r: 0.16686432, g: 0.12745458, b: 0.19245279, a: 1}
     - _skycolor: {r: 0.17070127, g: 0.20038241, b: 0.5169811, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
