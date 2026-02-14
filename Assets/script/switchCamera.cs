@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEditor;
 
+
 public class switchCamera : MonoBehaviour
 {
     public GameObject sideCam;
@@ -13,32 +14,20 @@ public class switchCamera : MonoBehaviour
     public InputActionReference ButtonSidecam;
     public InputActionReference ButtonTopcam;
 
- 
-    // public GameMenuManager gameManager;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //public void manageCams()
-    //  {
-    //      if (manger == 0)
-    //      {
-    //          cam_2();
-    //          manager = 1;
+    public FadeScreen fadeScreen;
+    public FadeScreen fadeScreenSide;
+    public FadeScreen fadeScreenTop;
 
-    //      }
-    //      else
-    //      {
-    //          cam_1();
-    //          manager = 0;
-    //      }
-    //  }
+    bool topButtonpressed = false;
+    bool sideButtonpressed = false;
 
-    //void Start()
-    //{
-    //    gameManager = GetComponent<GameMenuManager>();
-    //}
 
 
     void Start()
     {
+        fadeScreen.fadeDuration = 0.5f;
+        fadeScreenTop.fadeDuration = 0.5f;
+        fadeScreenSide.fadeDuration = 0.5f;
         ButtonTopcam.action.started += ButtonPressedTop;
         ButtonTopcam.action.canceled += ButtonReleasedTop;
 
@@ -47,9 +36,36 @@ public class switchCamera : MonoBehaviour
 
     }
 
+    public void Fade()
+    {
+        StartCoroutine(fadeRoutine());
+    }
+    IEnumerator fadeRoutine()
+    {
+        fadeScreen.FadeOut();
+        yield return new WaitForSeconds(fadeScreen.fadeDuration); // wiat for screen to fade completely then exit
+        
+        
+        if (topButtonpressed)
+        {
+            topCamSwitch();
+            Debug.Log("camera swithed");
+
+            fadeScreenTop.FadeIn();
+            yield return new WaitForSeconds(fadeScreenTop.fadeDuration);
+        }
+    }
+
     void ButtonPressedTop(InputAction.CallbackContext context)
     {
-        Debug.Log("top view pressed");
+
+        topButtonpressed = true;
+        Fade();
+ 
+    }
+
+    void topCamSwitch()
+    {
         sideCam.SetActive(false);
         topCam.SetActive(true);
         OGcam.SetActive(false);
@@ -61,11 +77,13 @@ public class switchCamera : MonoBehaviour
         sideCam.SetActive(false);
         topCam.SetActive(false);
         OGcam.SetActive(true);
+        topButtonpressed = false;
     }
 
 
     void ButtonPressedSide(InputAction.CallbackContext context)
     {
+        
         sideCam.SetActive(true);
         topCam.SetActive(false);
         OGcam.SetActive(false);
