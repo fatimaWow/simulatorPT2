@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Credits
+  m_text: About
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2157,8 +2157,8 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5686275, g: 0.60393196, b: 0.8862745, a: 1}
-  m_Intensity: 19.12
-  m_Range: 5.7
+  m_Intensity: 19
+  m_Range: 6.74
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}

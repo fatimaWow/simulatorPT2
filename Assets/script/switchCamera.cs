@@ -6,13 +6,14 @@ using UnityEditor;
 
 public class switchCamera : MonoBehaviour
 {
-    public GameObject camera1;
-    public GameObject camera2;
-    public GameObject OGCamera;
+    public GameObject sideCam;
+    public GameObject topCam;
+    public GameObject OGcam;
     //public int manager;
-    public InputActionProperty switchCam;
-    public InputActionProperty switchCam2;
-    public InputActionProperty switchCamOG;
+    public InputActionReference ButtonSidecam;
+    public InputActionReference ButtonTopcam;
+
+ 
     // public GameMenuManager gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     //public void manageCams()
@@ -38,52 +39,45 @@ public class switchCamera : MonoBehaviour
 
     void Start()
     {
+        ButtonTopcam.action.started += ButtonPressedTop;
+        ButtonTopcam.action.canceled += ButtonReleasedTop;
+
+        ButtonSidecam.action.started += ButtonPressedSide;
+        ButtonSidecam.action.canceled += ButtonReleasedSide;
 
     }
 
-    void Update()
+    void ButtonPressedTop(InputAction.CallbackContext context)
     {
-        if (switchCam.action.WasPressedThisFrame())
-        {
-            cam_1();
-        }
-
-        if (switchCam2.action.WasPressedThisFrame())
-        {
-            cam_2();
-        }
-
-        if (switchCamOG.action.WasPressedThisFrame())
-        {
-            cam_og();
-        }
+        Debug.Log("top view pressed");
+        sideCam.SetActive(false);
+        topCam.SetActive(true);
+        OGcam.SetActive(false);
     }
 
-    public void cam_og()
+
+    void ButtonReleasedTop(InputAction.CallbackContext context)
     {
-        OGCamera.SetActive(true);
-        camera1.SetActive(false);
-        camera2.SetActive(false);
-
-        //gameManager.head = camera2.transform;
+        sideCam.SetActive(false);
+        topCam.SetActive(false);
+        OGcam.SetActive(true);
     }
 
-    public void cam_2()
+
+    void ButtonPressedSide(InputAction.CallbackContext context)
     {
-        camera2.SetActive(true);
-        camera1.SetActive(false);
-        OGCamera.SetActive(false);
-
-        //gameManager.head = camera2.transform;
+        sideCam.SetActive(true);
+        topCam.SetActive(false);
+        OGcam.SetActive(false);
     }
 
 
-    public void cam_1()
+    void ButtonReleasedSide(InputAction.CallbackContext context)
     {
-        camera1.SetActive(true);
-        camera2.SetActive(false);
-        OGCamera.SetActive(false);
-
-
+        sideCam.SetActive(false);
+        topCam.SetActive(false);
+        OGcam.SetActive(true);
     }
+
+
 }
