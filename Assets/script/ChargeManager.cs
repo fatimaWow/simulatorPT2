@@ -1,6 +1,8 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
+
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 
 public class ChargeManager : MonoBehaviour
@@ -12,7 +14,12 @@ public class ChargeManager : MonoBehaviour
     bool allChargesCollide = false;
     public static bool detectChange = false;
     public bool run = false;
-    
+
+    float distance;
+
+
+
+
 
     void Awake()
     {
@@ -62,7 +69,13 @@ public class ChargeManager : MonoBehaviour
             }
         }
         detectChange = true;
+    
+
+
+
     }
+
+   
 
     public void add( float num)
     {

@@ -26,7 +26,7 @@ public class switchCamera : MonoBehaviour
 
     void Start()
     {
-        fadeScreen.fadeDuration = 0.5f;
+        //fadeScreen.fadeDuration = 0.5f;
         fadeScreenTop.fadeDuration = 0.5f;
         fadeScreenSide.fadeDuration = 0.5f;
         ButtonTopcam.action.started += ButtonPressedTop;

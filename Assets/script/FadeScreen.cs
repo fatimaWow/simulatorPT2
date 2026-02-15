@@ -11,6 +11,9 @@ public class FadeScreen : MonoBehaviour
     public Color fadeColor;
     private Renderer rend;
 
+
+   
+
     void OnEnable()
     {
         rend = GetComponent<Renderer>();
@@ -49,12 +52,6 @@ public class FadeScreen : MonoBehaviour
         float timer = 0;
         while (timer <= fadeDuration)
         {
-
-
-
-
-
-
 
             Color newColor = fadeColor;
             newColor.a = Mathf.Lerp(alphaIn, alphaOut,timer/fadeDuration);

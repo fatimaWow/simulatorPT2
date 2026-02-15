@@ -10,13 +10,14 @@ public class Charge : MonoBehaviour
     private float k = 8f;
     public forceVector vec;
     public bool maxReached = false;
+    public GameObject trajectory;
 
     //  public int charge;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-         //vec = GetComponentInChildren<forceVector>();
+        vec = GetComponentInChildren<forceVector>();
     }
 
     void OnEnable()
@@ -76,6 +77,7 @@ public class Charge : MonoBehaviour
         // chekc if charge collide with plane
         if (collision.gameObject.CompareTag("plane"))
         {
+            trajectory.SetActive(false);
             Debug.Log("collision with plane");
             is_collide = true;
 
