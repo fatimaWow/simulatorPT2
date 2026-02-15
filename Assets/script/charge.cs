@@ -56,8 +56,10 @@ public class Charge : MonoBehaviour
         //Debug.Log("Force: " + force);
 
         //vec.rotate(target);
-        transform.LookAt(target.transform);
-        vec.vectorActive();
+
+
+        //transform.LookAt(target.transform);
+        //vec.vectorActive();
 
 
 
@@ -72,12 +74,17 @@ public class Charge : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-       
 
-        // chekc if charge collide with plane
+
+        if (collision.gameObject.CompareTag("trajectory"))
+        {
+            Debug.Log("traj collide");
+            trajectory.SetActive(false);
+        }
+
         if (collision.gameObject.CompareTag("plane"))
         {
-            trajectory.SetActive(false);
+         
             Debug.Log("collision with plane");
             is_collide = true;
 

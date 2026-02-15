@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -25,7 +26,10 @@ public class ElectrostaticGrid : MonoBehaviour
 
     public ChargeManager manager;
 
+  
+
     float animTime = 1f;
+
 
     // float deltaCharge = 0;
 
@@ -61,6 +65,7 @@ public class ElectrostaticGrid : MonoBehaviour
     {
         if (ChargeManager.detectChange)
         {
+          
             ChargeManager.detectChange = false;
             animTime = 0;
             for (int y = 0; y <= resolutionY; y++)
@@ -71,32 +76,35 @@ public class ElectrostaticGrid : MonoBehaviour
                 }
             }
             for (int i = 0; i < vertices.Length; i++) oldVertices[i] = vertices[i].y;
-        }
-        if (animTime >= 1f) return;
-        animTime = Mathf.Min(1f, animTime + Time.fixedDeltaTime * 0.5f);
+        }       
+            if (animTime >= 1f) return;
+            animTime = Mathf.Min(1f, animTime + Time.fixedDeltaTime * 0.5f);
+        
+     
         UpdateField();
     }
 
-    void repeat()
-    {
-        if (manager.run == true && allChargesReachMax == false)
-        {
+    //void repeat()
+    //{
+    //    if (manager.run == true && allChargesReachMax == false)
+    //    {
             
-            UpdateField();
-            Debug.Log("repeat called");
-        }
+    //        UpdateField();
+    //        Debug.Log("repeat called");
+    //    }
        
-    }
+    //}
 
     public void reset()
     {
-        for(int i = manager.charges.Count - 1; i > 1; i--)
+        for (int i = ChargeManager.charges.Count - 1; i > 1; i--)
         {
-            manager.charges[i].destroySelf();
+            ChargeManager.charges[i].destroySelf();
         }
 
-       isolines.mesh.Clear(); // reset isoline
-        BuildGrid();
+        isolines.mesh.Clear(); // reset isoline
+      
+       BuildGrid();
      
     }
 
@@ -149,6 +157,8 @@ public class ElectrostaticGrid : MonoBehaviour
                 i++;
             }
         }
+
+        
 
         mesh.vertices = vertices;
         mesh.triangles = tris;

@@ -9,7 +9,7 @@ public class ChargeManager : MonoBehaviour
 {
     public static ChargeManager Instance;
 
-    public readonly List<Charge> charges = new();
+    public static List<Charge> charges = new();
     
     bool allChargesCollide = false;
     public static bool detectChange = false;

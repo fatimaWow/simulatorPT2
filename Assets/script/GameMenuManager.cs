@@ -1,9 +1,11 @@
-using UnityEngine;
-using System.Collections.Generic;
+using System;
 using System.Collections;
-using UnityEngine.InputSystem;
-using UnityEditor;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using TMPro;
 
 
 public class GameMenuManager : MonoBehaviour
@@ -13,11 +15,14 @@ public class GameMenuManager : MonoBehaviour
     public GameObject gameMenu;
     public Transform head;
     public float spawndistance = 2;
+    public ChargeManager manager;
+    public TMP_Text textMag;
+    private List<Charge> charges;
 
 
     void Start()
     {
-
+        charges = ChargeManager.charges;
     }
 
     // Update is called once per frame
@@ -33,6 +38,7 @@ public class GameMenuManager : MonoBehaviour
 
         gameMenu.transform.LookAt(new Vector3(head.position.x, gameMenu.transform.position.y, head.position.z));
         gameMenu.transform.forward *= -1;
+        textMag.text = charges[charges.Count - 1].charge.ToString();
 
     }
 
