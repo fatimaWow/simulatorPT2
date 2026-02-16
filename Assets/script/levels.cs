@@ -15,13 +15,14 @@ public class levels : MonoBehaviour
     public TMP_Text textDist;
     public TMP_Text questionText;
     float distance;
-    bool correct;
 
     public ElectrostaticGrid grid;
 
     bool level1 = true;
     bool level2 = false;
     bool level3 = false;
+
+
 
     String currQuestion = "";
 

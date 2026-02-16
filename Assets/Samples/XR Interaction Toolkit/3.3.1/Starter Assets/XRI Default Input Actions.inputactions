@@ -2044,7 +2044,7 @@
                     "name": "Activate",
                     "type": "Button",
                     "id": "41976d89-60de-4deb-bff9-16b4af96b290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -2131,9 +2131,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "switchCamOG",
+                    "name": "shootingButton",
                     "type": "Button",
-                    "id": "b0e0e3c4-e403-465f-b46e-68a101e5bf74",
+                    "id": "fda11a18-d206-400a-aa57-69a4ad73ecf5",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -2451,12 +2451,12 @@
                 },
                 {
                     "name": "",
-                    "id": "e20916c8-6c41-49f3-bc76-bda6ec5e7167",
-                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "id": "8403f548-c3e4-49bb-8f3d-f7c93875d396",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "switchCamOG",
+                    "action": "shootingButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

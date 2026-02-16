@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - trajectory
+  - plane
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Charge
+  - Ufo
   - Water
   - UI
   - ClearPlane
