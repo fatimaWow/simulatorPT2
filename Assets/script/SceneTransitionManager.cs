@@ -8,18 +8,26 @@ public class SceneTransitionManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public FadeScreen fadeScreen;
+    public GameObject xrorigin;
+    public GameObject levels;
 
-    public void GoToScene(int sceneIndex)
+    public void teleportSandbox()
     {
-        StartCoroutine(GoToSceneRoutine(sceneIndex));
+        levels.SetActive(false);
+        StartCoroutine(TeleportRoutine());
     }
-    IEnumerator GoToSceneRoutine(int sceneIndex)
+    public void teleportQuiz()
+    {
+        StartCoroutine(TeleportRoutine());
+    }
+    IEnumerator TeleportRoutine()
     {
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration); // wiat for screen to fade completely then exit
-
+        xrorigin.transform.position = new Vector3(.15f, 6f, -13f);
+      
         //launch new scene
-        SceneManager.LoadScene(sceneIndex);
+        fadeScreen.FadeIn();
 
     }
 }

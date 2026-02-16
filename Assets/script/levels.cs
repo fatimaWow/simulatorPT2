@@ -11,7 +11,7 @@ public class levels : MonoBehaviour
 
     public ChargeManager manager;
     List<Charge> charges;
-    public GameObject midRef;
+    public GameObject testCharge;
     public TMP_Text textDist;
     public TMP_Text questionText;
     float distance;
@@ -23,10 +23,13 @@ public class levels : MonoBehaviour
     bool level2 = false;
     bool level3 = false;
 
+    String currQuestion = "";
+
     void Awake()
     {
         charges = ChargeManager.charges;
-        questionText.text = "Given a radius of 5m from the test charge, what value of (Q) will give ≈ <b>5V voltage</b>?".ToString();
+        currQuestion = "Given a radius of 5m from the test charge, what value of (Q) will give ≈ <color=#D000FF>5V voltage</color>?";
+        questionText.text = currQuestion.ToString();
         //  questionText.text = "Find the correct radius and charge value to get a voltage of approx. 5.5 V".ToString();
     }
     public float calcdistance(Vector3 positionA, Vector3 positionB)
@@ -53,20 +56,38 @@ public class levels : MonoBehaviour
             Debug.Log("level 2");
 
             //questionText.text = "Find the right charge pair and radius to acheive an attractive force of 2N x 10^9".ToString();
-            questionText.text = "Given charges +4 and -2 , find the correct radius to acheive an attractive force of ≈ 0.7N x 10^9".ToString();
+            currQuestion = "Given charges +4 and -2 , find the correct radius to acheive an attractive force of ≈ <color=#D000FF>0.7N x 10^9</color>";
+            questionText.text = currQuestion.ToString();
 
         }
         else if (level3)
         {
           
-            Debug.Log("level3");  
-            questionText.text = "Find the righx 10^9".ToString();
+            Debug.Log("level3");
+            currQuestion = "Find the righx 10^9";
+            questionText.text = currQuestion.ToString();
 
         }
         
-        
-
+       
             grid.reset();
+
+        // Code here will execute after the wait time has passed
+        Debug.Log("Action resumed after waiting. Current timestamp: " + Time.time);
+    }
+
+    IEnumerator DelayedIncorrect(float waitTime)
+    {
+        Debug.Log("Action started at timestamp: " + Time.time);
+
+        questionText.text = "Try Again!".ToString();
+
+        yield return new WaitForSeconds(waitTime);//waitfor seconds
+      
+
+        questionText.text = currQuestion.ToString();
+
+        grid.reset();
 
         // Code here will execute after the wait time has passed
         Debug.Log("Action resumed after waiting. Current timestamp: " + Time.time);
@@ -81,7 +102,7 @@ public class levels : MonoBehaviour
             if (charges.Count == 3)
             {
                
-                distance = calcdistance(charges[2].gameObject.transform.position, midRef.gameObject.transform.position);
+                distance = calcdistance(charges[2].gameObject.transform.position, testCharge.gameObject.transform.position);
                 textDist.text =  Math.Round(distance).ToString();
             }
 
@@ -92,10 +113,16 @@ public class levels : MonoBehaviour
                     //distance = calcdistance(charges[2].gameObject.transform.position, midRef.gameObject.transform.position);
                     if (distance < 5.8 && distance > 4.2 && charges[2].charge == 3)
                     {
+                        textDist.text = "".ToString();
+                        testCharge.SetActive(false);
                         level1 = false;
                         level2 = true;
-                        StartCoroutine(DelayedLevelswitch(7.0f));
+                        StartCoroutine(DelayedLevelswitch(6.0f));
                       
+                    }
+                    else
+                    {
+                        StartCoroutine(DelayedIncorrect(6.0f));
                     }
                 }
             }
@@ -108,7 +135,7 @@ public class levels : MonoBehaviour
             {
                 
                 distance = calcdistance(charges[2].gameObject.transform.position, charges[3].gameObject.transform.position);
-                textDist.text = Math.Round(distance, 1).ToString();
+                textDist.text = Math.Round(distance).ToString();
 
                 if (charges[2].charge == -2 && charges[3].charge == 4 || charges[3].charge == -2 && charges[2].charge == 4)
                 {
@@ -118,10 +145,14 @@ public class levels : MonoBehaviour
                         {
                             level2 = false;
                             level3 = true;
-                            StartCoroutine(DelayedLevelswitch(7.0f));
+                            StartCoroutine(DelayedLevelswitch(6.0f));
+                        }
+                        else
+                        {
+                            StartCoroutine(DelayedIncorrect(6.0f));
                         }
                     }
-                }
+                } //
             }
 
 
@@ -131,6 +162,7 @@ public class levels : MonoBehaviour
         if (level3)
         {
             Debug.Log("level 3 loop");
+
         }
            
 
