@@ -2452,7 +2452,7 @@
                 {
                     "name": "",
                     "id": "8403f548-c3e4-49bb-8f3d-f7c93875d396",
-                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

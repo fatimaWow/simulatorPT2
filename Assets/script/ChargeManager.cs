@@ -14,8 +14,9 @@ public class ChargeManager : MonoBehaviour
     bool allChargesCollide = false;
     public static bool detectChange = false;
     public bool run = false;
-
     float distance;
+
+    public GameObject level;
 
 
 

@@ -15,12 +15,15 @@ public class levels : MonoBehaviour
     public TMP_Text textDist;
     public TMP_Text questionText;
     float distance;
-
     public ElectrostaticGrid grid;
-
     bool level1 = true;
     bool level2 = false;
     bool level3 = false;
+
+    public GameObject rayGun;
+    public GameObject rightControllermodel;
+
+    public bool correct = false;
 
 
 
@@ -51,6 +54,9 @@ public class levels : MonoBehaviour
         questionText.text = "Correct!".ToString();
    
         yield return new WaitForSeconds(waitTime);//waitfor seconds
+
+        rayGun.SetActive(false);
+        rightControllermodel.SetActive(true);
 
         if (level2)
         {
@@ -118,8 +124,12 @@ public class levels : MonoBehaviour
                         testCharge.SetActive(false);
                         level1 = false;
                         level2 = true;
-                        StartCoroutine(DelayedLevelswitch(6.0f));
-                      
+                        StartCoroutine(DelayedLevelswitch(10.0f));
+
+                        rayGun.SetActive(true);
+                        rightControllermodel.SetActive(false);
+
+
                     }
                     else
                     {
@@ -144,9 +154,14 @@ public class levels : MonoBehaviour
                     {
                         if (distance > 9.2  && distance < 10.7)
                         {
+                            
                             level2 = false;
                             level3 = true;
                             StartCoroutine(DelayedLevelswitch(6.0f));
+
+                            rayGun.SetActive(true);
+                            rightControllermodel.SetActive(false);
+
                         }
                         else
                         {
