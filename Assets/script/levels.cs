@@ -23,7 +23,8 @@ public class levels : MonoBehaviour
     public GameObject rayGun;
     public GameObject rightControllermodel;
 
-    public bool correct = false;
+    public TMP_Text timertext;
+    public float currentTime = 0f;
 
 
 
@@ -52,11 +53,16 @@ public class levels : MonoBehaviour
         Debug.Log("Action started at timestamp: " + Time.time);
 
         questionText.text = "Correct!".ToString();
+        currentTime = 5f;
+
+        timertext.gameObject.SetActive(true);
    
         yield return new WaitForSeconds(waitTime);//waitfor seconds
 
+        timertext.gameObject.SetActive(false);
         rayGun.SetActive(false);
         rightControllermodel.SetActive(true);
+     
 
         if (level2)
         {
@@ -100,9 +106,26 @@ public class levels : MonoBehaviour
         Debug.Log("Action resumed after waiting. Current timestamp: " + Time.time);
     }
 
+    void timer()
+    {
+        if (currentTime > 0)
+        {
+            currentTime -= Time.deltaTime;
+            timertext.text = currentTime.ToString("0");
+            if (currentTime <= 0)
+            {
+                currentTime = 0; 
+                timertext.text = "0";
+                
+                Debug.Log("Countdown Finished!");
+            }
+        }
+    }
 
     void Update()
     {
+        timer();
+
         if (level1)
         {
             Debug.Log("level 1 loop");
@@ -124,7 +147,7 @@ public class levels : MonoBehaviour
                         testCharge.SetActive(false);
                         level1 = false;
                         level2 = true;
-                        StartCoroutine(DelayedLevelswitch(10.0f));
+                        StartCoroutine(DelayedLevelswitch(6.0f));
 
                         rayGun.SetActive(true);
                         rightControllermodel.SetActive(false);

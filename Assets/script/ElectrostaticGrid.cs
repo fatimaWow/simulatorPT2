@@ -186,7 +186,7 @@ public class ElectrostaticGrid : MonoBehaviour
                     Vector2 cp = c.GetLocalXZ(transform);
                     float r = Mathf.Max(Vector2.Distance(p, cp), softening);
 
-                    pot += kConstant * c.charge / r;
+                    pot += kConstant * ((c.charge)*.7f) / r;
                 }
 
                 field[x, y] = Mathf.Lerp(oldField[x, y], pot, 1 - (1 - animTime) * (1 - animTime));
@@ -214,30 +214,7 @@ public class ElectrostaticGrid : MonoBehaviour
                 Debug.Log("chargesMax state:" + allChargesReachMax);
             }
 
-            //if (c.charge > 0)
-            //{
-            //    if (c.deltacharge < c.charge)
-            //    {
-            //        c.deltacharge += 0.2f;
-            //    }
-            //    else
-            //    {
-            //        c.maxReached = true;
-            //    }
-
-            //}
-            //else
-            //{
-            //    if (c.deltacharge > c.charge)
-            //    {
-            //        c.deltacharge -= 0.2f;
-            //    }
-            //    else
-            //    {
-            //        c.maxReached = true;
-            //    }
-            //}
-           // Debug.Log(c.deltacharge);
+          
 
         }
 

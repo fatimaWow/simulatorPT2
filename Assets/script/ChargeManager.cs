@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using UnityEngine;
 
 
@@ -16,9 +17,14 @@ public class ChargeManager : MonoBehaviour
     public bool run = false;
     float distance;
 
-    public GameObject level;
+    public GameObject levelObject;
+    levels levelScript;
+    
 
-
+    void Start()
+    {
+        levelScript = levelObject.GetComponent<levels>();
+    }
 
 
 
@@ -53,25 +59,25 @@ public class ChargeManager : MonoBehaviour
     public void rungame() //runs when play button press
     {
        
-        if (charges.Count > 3)
-        {
-            if (charges[2].charge < 0 && charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0)
+       
+            if (charges.Count > 3)
             {
-                charges[2].calcForce(charges[3]);
-                charges[3].calcForce(charges[2]);
+                if (charges[2].charge < 0 && charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0)
+                {
+                    charges[2].calcForce(charges[3]);
+                    charges[3].calcForce(charges[2]);
 
+                }
+                else
+                {
+                    charges[2].calcForce(charges[3]);
+                    charges[3].calcForce(charges[2]);
+                    charges[2].transform.Rotate(0, 180, 0);
+                    charges[3].transform.Rotate(0, 180, 0);
+                }
             }
-            else
-            {
-                charges[2].calcForce(charges[3]);
-                charges[3].calcForce(charges[2]);
-                charges[2].transform.Rotate(0, 180, 0);
-                charges[3].transform.Rotate(0, 180, 0);
-            }
-        }
-        detectChange = true;
-    
-
+            detectChange = true;
+        
 
 
     }
@@ -122,17 +128,6 @@ public class ChargeManager : MonoBehaviour
         scale.z += num;
         charges[charges.Count - 1].transform.localScale = scale;
     }
-
-    //public void reset()
-    //{
-    //    for (int i = 2; i < charges.Count; i++)
-    //    {
-    //        charges[i].destroySelf();
-    //    }
-
-    //}
-
-
 
     public IReadOnlyList<Charge> Charges => charges;
 }
