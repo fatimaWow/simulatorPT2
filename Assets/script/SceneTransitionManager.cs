@@ -10,14 +10,20 @@ public class SceneTransitionManager : MonoBehaviour
     public FadeScreen fadeScreen;
     public GameObject xrorigin;
     public GameObject levels;
+ 
+    public GameObject statsManger;
+    public GameObject statsMenu;
 
     public void teleportSandbox()
     {
+
+        statsManger.SetActive(true);
+        statsMenu.SetActive(true); 
         levels.SetActive(false);
         StartCoroutine(TeleportRoutine());
     }
     public void teleportQuiz()
-    {
+    { 
         StartCoroutine(TeleportRoutine());
     }
     IEnumerator TeleportRoutine()

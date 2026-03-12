@@ -86,7 +86,7 @@ public class levels : MonoBehaviour
             grid.reset();
 
         // Code here will execute after the wait time has passed
-        Debug.Log("Action resumed after waiting. Current timestamp: " + Time.time);
+    
     }
 
     IEnumerator DelayedIncorrect(float waitTime)
@@ -103,7 +103,7 @@ public class levels : MonoBehaviour
         grid.reset();
 
         // Code here will execute after the wait time has passed
-        Debug.Log("Action resumed after waiting. Current timestamp: " + Time.time);
+        
     }
 
     void timer()
@@ -114,10 +114,10 @@ public class levels : MonoBehaviour
             timertext.text = currentTime.ToString("0");
             if (currentTime <= 0)
             {
-                currentTime = 0; 
+                currentTime = 0;
                 timertext.text = "0";
                 
-                Debug.Log("Countdown Finished!");
+              
             }
         }
     }

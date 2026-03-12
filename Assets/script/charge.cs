@@ -1,3 +1,4 @@
+﻿
 
 using UnityEngine;
 
@@ -9,17 +10,22 @@ public class Charge : MonoBehaviour
     private ElectrostaticGrid plane;
     private float k = 8f;
     public forceVector vec;
+    public GameObject vecObject;
     public bool maxReached = false;
     public GameObject trajectory;
 
     //  public int charge;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        vec = GetComponentInChildren<forceVector>();
-    }
+        vec = GetComponentInChildren<forceVector>(true);
 
+       
+
+        if (vec == null)
+            Debug.LogError("forceVector missing on " + gameObject.name);
+    }
     void OnEnable()
     {
         if (!ChargeManager.Instance)
@@ -44,25 +50,23 @@ public class Charge : MonoBehaviour
     //{
     //    if (is_collide)
     //    {
-           
+
     //        plane.UpdateField();
     //    }
     //}
-    public void calcForce(Charge target)
+    
+   public void calcForce(Charge target)
     {
-        //float product = Mathf.Abs(charge) * Mathf.Abs(target.charge);
-        //float distance = Vector3.Distance(transform.position, target.transform.position);
-        //float force = k*(product / Mathf.Pow(distance, 2));
-        //Debug.Log("Force: " + force);
+        if (target == null || vec == null) return;
 
-        //vec.rotate(target);
+        float sign = Mathf.Sign(charge * target.charge);
 
+        Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
 
-        //transform.LookAt(target.transform);
-        //vec.vectorActive();
+        //// If same sign → repel → reverse direction
+        //Vector3 finalDirection = (charge > 0) ? -directionToTarget : directionToTarget;
 
-
-
+        vec.rotate(directionToTarget);
     }
 
     public void destroySelf()

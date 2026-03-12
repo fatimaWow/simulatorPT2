@@ -1003,6 +1003,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "StatsTriggerButton",
+                    "type": "Button",
+                    "id": "1fa4d678-3390-4d28-8e76-be8d5df490ea",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1344,6 +1353,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "camSwitch2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7147d871-b788-49a2-aee1-ed77062650fa",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StatsTriggerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

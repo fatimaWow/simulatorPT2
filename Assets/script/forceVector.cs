@@ -15,12 +15,9 @@ public class forceVector : MonoBehaviour
         
     }
 
-    public void vectorActive()
+    public void rotate(Vector3 direction)
     {
-        //var direction = (target.transform.position - transform.position).normalized;
-        //var targetRotation = Quaternion.LookRotation(direction);
-        //transform.rotation = targetRotation;
-
+        transform.rotation = Quaternion.LookRotation(direction);
         gameObject.SetActive(true);
     }
 }

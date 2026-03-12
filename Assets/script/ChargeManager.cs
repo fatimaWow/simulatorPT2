@@ -60,21 +60,32 @@ public class ChargeManager : MonoBehaviour
     {
        
        
-            if (charges.Count > 3)
+            if (charges.Count == 4)
             {
-                if (charges[2].charge < 0 && charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0)
+            charges[2].vecObject.SetActive(true);
+            charges[3].vecObject.SetActive(true);
+            if (charges[2].charge < 0 && charges[3].charge > 0 || charges[3].charge < 0 && charges[2].charge > 0) //opp sign charges
                 {
                     charges[2].calcForce(charges[3]);
                     charges[3].calcForce(charges[2]);
 
-                }
-                else
+
+               
+
+
+            }
+                else //same sighn
                 {
+
                     charges[2].calcForce(charges[3]);
                     charges[3].calcForce(charges[2]);
-                    charges[2].transform.Rotate(0, 180, 0);
-                    charges[3].transform.Rotate(0, 180, 0);
-                }
+
+                Vector3 ch2Rot = charges[2].vecObject.transform.eulerAngles;
+                Vector3 ch3Rot = charges[3].vecObject.transform.eulerAngles;
+                charges[2].vecObject.transform.rotation = Quaternion.Euler(ch2Rot.x, ch2Rot.y + 180, ch2Rot.z);
+                charges[3].vecObject.transform.rotation = Quaternion.Euler(ch3Rot.x, ch3Rot.y + 180, ch3Rot.z);
+
+            }
             }
             detectChange = true;
         
