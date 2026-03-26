@@ -14,6 +14,9 @@ public class SceneTransitionManager : MonoBehaviour
     public GameObject statsManger;
     public GameObject statsMenu;
 
+    public GameObject buttonsPanel;
+    public GameObject creditsPanel;
+
     public void teleportSandbox()
     {
 
@@ -23,7 +26,8 @@ public class SceneTransitionManager : MonoBehaviour
         StartCoroutine(TeleportRoutine());
     }
     public void teleportQuiz()
-    { 
+    {
+        levels.SetActive(true);
         StartCoroutine(TeleportRoutine());
     }
     IEnumerator TeleportRoutine()
@@ -35,6 +39,18 @@ public class SceneTransitionManager : MonoBehaviour
         //launch new scene
         fadeScreen.FadeIn();
 
+    }
+
+    public void enableCredits()
+    {
+        creditsPanel.SetActive(true);
+        buttonsPanel.SetActive(false);
+    }
+
+    public void disableCredits()
+    {
+        creditsPanel.SetActive(false);
+        buttonsPanel.SetActive(true);
     }
 }
 

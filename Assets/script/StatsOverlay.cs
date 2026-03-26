@@ -34,7 +34,7 @@ public class StatsOverlay : MonoBehaviour
     {
         triggerButton.action.started += TriggerPressed;
         triggerButton.action.canceled += TriggerReleased;
-
+        text.text = "Hold down Trigger to veiw stats";
 
     }
 

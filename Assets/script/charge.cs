@@ -12,7 +12,7 @@ public class Charge : MonoBehaviour
     public forceVector vec;
     public GameObject vecObject;
     public bool maxReached = false;
-    public GameObject trajectory;
+
 
     //  public int charge;
 
@@ -46,14 +46,7 @@ public class Charge : MonoBehaviour
         return new Vector2(local.x, local.z);
     }
 
-    //public void run()
-    //{
-    //    if (is_collide)
-    //    {
-
-    //        plane.UpdateField();
-    //    }
-    //}
+  
     
    public void calcForce(Charge target)
     {
@@ -74,17 +67,19 @@ public class Charge : MonoBehaviour
         Destroy(gameObject);
     }
 
+  
+
 
     void OnCollisionEnter(Collision collision)
     {
 
 
 
-        if (collision.gameObject.CompareTag("trajectory"))
-        {
-            Debug.Log("traj collide");
-            trajectory.SetActive(false);
-        }
+        //if (collision.gameObject.CompareTag("trajectory"))
+        //{
+        //    Debug.Log("traj collide");
+        //    trajectory.SetActive(false);
+        //}
 
         if (collision.gameObject.CompareTag("plane"))
         {
